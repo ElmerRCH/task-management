@@ -18,6 +18,8 @@ services:
       - 4209:4209
     volumes:
       - ./Frontend:/app:delegated
-    command: ["ng","serve", "--host", "0.0.0.0", "--port", "4209"]
+
+    command: ["sh", "-c", "npm install && ng serve --host 0.0.0.0 --port 4209", "--live-reload"]
    
 
+ 
