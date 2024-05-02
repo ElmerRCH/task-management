@@ -6,8 +6,8 @@ from .models import Usuario
 
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
-    
+
     queryset = Usuario.objects.all()
     serializer_class = ProgrammerSerializer
-
+   
     

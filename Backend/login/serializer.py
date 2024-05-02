@@ -7,3 +7,5 @@ class ProgrammerSerializer(serializers.ModelSerializer):
         model = Usuario
         #fields = ('name')
         fields = '__all__'
+        
+   
