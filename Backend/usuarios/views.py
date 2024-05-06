@@ -9,6 +9,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
 
@@ -17,10 +18,10 @@ class UserViewSet(viewsets.ModelViewSet):
 
 @api_view(['POST'])
 def registrar_user(request):
-    
+
     if Usuario.objects.filter(email=request.data.get('email')).exists():
-        return Response({"error": "El email ya está registrado."}, status=status.HTTP_400_BAD_REQUEST)
-    
+        return Response({"available":False}, status=status.HTTP_400_BAD_REQUEST)
+
     if request.data['password'] == request.data['conf_password']:
         
         user = Usuario.objects.create(
@@ -31,7 +32,7 @@ def registrar_user(request):
         return Response('iguales')
     return Response('no  iguales')
     
-@api_view(['POST'])
+@api_view(['GET'])
 def log_user(request):
-    print('llego..',request.data['name'])
-    return Response({"is_active": request.data['name']})
+    print('llego................................')
+    return Response("eeecho")
