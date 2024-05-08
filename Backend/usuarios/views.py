@@ -16,6 +16,13 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsersSerializer
 
+
+@api_view(['POST'])
+def verificar_email(request):
+    
+    exist = False if Usuario.objects.filter(email=request.data.get('email')).exists() else True
+    return Response({"available":exist}, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 def registrar_user(request):
 
@@ -34,5 +41,5 @@ def registrar_user(request):
     
 @api_view(['GET'])
 def log_user(request):
-    print('llego................................')
+
     return Response("eeecho")

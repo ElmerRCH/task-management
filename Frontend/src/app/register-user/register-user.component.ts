@@ -1,3 +1,4 @@
+import {Utils} from '../utils/Utils'
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
 
@@ -9,24 +10,39 @@ import { UserService } from '../services/user.service';
 export class RegisterUserComponent {
 
   constructor(private userService: UserService) {}
+
   email: string = '';
-  password: string = '';
-  checkPassword: string = '';
   emailPlaceholder: string = '@example.com'
-  passwordPlaceholder: string = '••••••••';
-  passwordsMatch: boolean = true;
+  helpEmailMessage: string = ''
+  helpEmail: boolean = false
   emailAvailable: boolean = true;
 
+  password: string = '';
+  checkPassword: string = '';
+  passwordPlaceholder: string = '••••••••';
+
+  validation : boolean = false;
+  passwordsMatch: boolean = true;
+
+  onInputChangeEmail() {
+    const utils = new Utils(this.userService);
+    [this.helpEmail, this.helpEmailMessage] = utils.validationEmail(this.email)
+
+
+  }
 
   ngOnInit(): void {
     this.userService.PostRegisterUser().subscribe(users => {
       console.log(users);
     });
+
   }
 
   onSubmit(): void {
 
-    if (this.password === this.checkPassword){
+    //this.validation = Utils.validationRegister(this.email,this.password,this.checkPassword)
+
+    if (this.password === this.checkPassword && this.validation){
 
       const data = {
         'email': this.email,
