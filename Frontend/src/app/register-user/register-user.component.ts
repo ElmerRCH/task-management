@@ -17,6 +17,7 @@ export class RegisterUserComponent {
   helpEmail: boolean = false
   emailAvailable: boolean = true;
 
+
   password: string = '';
   checkPassword: string = '';
   passwordPlaceholder: string = '••••••••';
@@ -24,10 +25,11 @@ export class RegisterUserComponent {
   validation : boolean = false;
   passwordsMatch: boolean = true;
 
-  onInputChangeEmail() {
-    const utils = new Utils(this.userService);
-    [this.helpEmail, this.helpEmailMessage] = utils.validationEmail(this.email)
+  async onInputChangeEmail() {
 
+    const utils = new Utils(this.userService);
+    const result = await utils.validationEmail(this.email);
+    [this.helpEmail, this.helpEmailMessage] = result;
 
   }
 
@@ -43,7 +45,7 @@ export class RegisterUserComponent {
     //this.validation = Utils.validationRegister(this.email,this.password,this.checkPassword)
 
     if (this.password === this.checkPassword && this.validation){
-
+      
       const data = {
         'email': this.email,
         'password': this.password,

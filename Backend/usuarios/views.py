@@ -21,7 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
 def verificar_email(request):
     
     exist = False if Usuario.objects.filter(email=request.data.get('email')).exists() else True
-    return Response({"available":exist}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"available":exist}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def registrar_user(request):

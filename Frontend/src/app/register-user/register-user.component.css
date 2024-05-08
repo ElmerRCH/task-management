@@ -28,6 +28,17 @@
   text-align: start;
   grid-column: 2 / end;
 }
+.messages-containers .messages-containers-error{
+  color: black;
+  background-color: red;
+  border-radius: 10px;
+  margin-bottom:5px;
+  margin-right: 10px;
+  text-align: start;
+  grid-column: 2 / end;
+}
+
+
 .messages-containers div span{
   opacity: 1;
   margin-left: 10%;

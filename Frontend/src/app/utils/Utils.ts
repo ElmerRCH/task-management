@@ -1,6 +1,5 @@
+import { first } from 'rxjs/operators';
 import { UserService } from '../services/user.service'
-
-
 
 export class Utils {
 
@@ -12,7 +11,7 @@ export class Utils {
   };
 
 
-  public validationEmail(email: string):[boolean, string]{
+  public async validationEmail(email: string):Promise<[boolean, string]>{
 
     let validator = false
     let type_messages = [
@@ -31,14 +30,17 @@ export class Utils {
 
     }
 
-    if(email.includes('@') && email.includes('.com')){
+
+    if(email.includes('@') && email.endsWith('.com') ){
       messages = 'correo correcto'
       validator = true
-      
-      this.userService.PostRegisterUser().subscribe(users => {
-        console.log('check......',users);
-      });
 
+      const response = await this.userService.checkEmail({'email':email}).pipe(first()).toPromise();
+      if (response.available === false) {
+        messages = 'Correo no disponible';
+        validator = false
+        
+      }
     }
 
     return [validator, messages];

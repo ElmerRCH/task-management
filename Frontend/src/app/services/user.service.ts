@@ -14,6 +14,16 @@ export class UserService {
     return this.http.get('http://localhost:8000/usuario/prueba/');
   }
 
+  checkEmail(data: any): Observable<any> {
+    return this.http.post('http://localhost:8000/usuario/verificar-email/', data).pipe(
+      catchError(error => {
+        console.error('Error al crear usuario:', error);
+        throw error;
+      })
+    );
+  }
+
+
   createUser(data: any): Observable<any> {
     return this.http.post(this.apiUrl, data).pipe(
       catchError(error => {
