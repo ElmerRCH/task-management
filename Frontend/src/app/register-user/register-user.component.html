@@ -24,8 +24,24 @@
                       <input [(ngModel)]="email" [placeholder]="emailPlaceholder" [ngClass]="{ 'error-email': !emailAvailable }" (input)="onInputChangeEmail()" maxlength="50" type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" minlength="5" required=>
                   </div>
                   <div>
-                      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                      <input [(ngModel)]="password" minlength="6" maxlength="12" type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                      <div class="messages-containers">
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <div [ngClass]="{'messages-password-not-safe': helpPasswordMessage === 'contraseña no segura'}" *ngIf="helpPassword">
+                          <span  >{{helpPasswordMessage}}</span>
+                        </div>
+                      </div>
+                      <input [(ngModel)]="password" (input)="onInputChangePassword()" minlength="6" maxlength="12" type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required >
+                      <div class="container-help-password" *ngIf="helpPassword && helpPasswordMessage != 'contraseña muy segura'"  >
+                        <p >Your password must contain:</p>
+                        <ul >
+                          <li [ngClass]="{'container-help-password-green': password.length == 12,'container-help-password-red': password.length < 12}" >At least 12 characters</li>
+                          <li [ngClass]="{'container-help-password-green': hasLowerCase(),'container-help-password-red': !hasLowerCase()}" >Lower case letters (a-z)</li>
+                          <li [ngClass]="{'container-help-password-green': hasUpperCase(),'container-help-password-red': !hasUpperCase()}" >Upper case letters (A-Z)</li>
+                          <li [ngClass]="{'container-help-password-green': hasNumber(),'container-help-password-red': !hasNumber()}"  >Numbers (0-9)</li>
+                          <li [ngClass]="{'container-help-password-green': hasSpecialcharacter(),'container-help-password-red': !hasSpecialcharacter()}"  >Special characters (e.g. !#$%^&*)</li>
+                        </ul>
+
+                      </div>
                   </div>
                   <div>
                       <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>

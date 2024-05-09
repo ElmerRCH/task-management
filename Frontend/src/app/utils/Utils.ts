@@ -39,12 +39,30 @@ export class Utils {
       if (response.available === false) {
         messages = 'Correo no disponible';
         validator = false
-        
+
       }
     }
 
     return [validator, messages];
   };
 
+
+  public static validationPassword(password:string):[boolean,string]{
+    let validator = false
+    let type_messages = ''
+
+    if (password.length >= 1 && password.length < 5 ){
+        validator = true
+        type_messages = 'contraseña no segura'
+    }
+
+    if (password.length >= 5 && /[A-Z]/.test(password)){
+      validator = true
+      type_messages = /[.!#$%^&*]/.test(password) ? 'contraseña muy segura':'contraseña segura'
+
+    }
+
+    return [validator,type_messages]
+  }
 
 }

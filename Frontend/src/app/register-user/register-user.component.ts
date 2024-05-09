@@ -17,10 +17,11 @@ export class RegisterUserComponent {
   helpEmail: boolean = false
   emailAvailable: boolean = true;
 
-
   password: string = '';
   checkPassword: string = '';
   passwordPlaceholder: string = '••••••••';
+  helpPassword: boolean = false
+  helpPasswordMessage: string = ''
 
   validation : boolean = false;
   passwordsMatch: boolean = true;
@@ -31,6 +32,23 @@ export class RegisterUserComponent {
     const result = await utils.validationEmail(this.email);
     [this.helpEmail, this.helpEmailMessage] = result;
 
+  }
+
+  onInputChangePassword() {
+    [this.helpPassword,this.helpPasswordMessage] = Utils.validationPassword(this.password);
+  }
+  
+  hasLowerCase(): boolean {
+    return /[a-z]/.test(this.password);
+  }
+  hasUpperCase(): boolean {
+    return /[A-Z]/.test(this.password);
+  }
+  hasNumber(): boolean {
+    return /[0-9]/.test(this.password);
+  }
+  hasSpecialcharacter(): boolean {
+    return /[.!#$%^&*]/.test(this.password);
   }
 
   ngOnInit(): void {
@@ -45,7 +63,7 @@ export class RegisterUserComponent {
     //this.validation = Utils.validationRegister(this.email,this.password,this.checkPassword)
 
     if (this.password === this.checkPassword && this.validation){
-      
+
       const data = {
         'email': this.email,
         'password': this.password,
