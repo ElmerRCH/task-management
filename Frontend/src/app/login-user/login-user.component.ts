@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-login-user',
   templateUrl: './login-user.component.html',
-  styleUrls: ['./login-user.component.css']
+  styleUrls: ['./login-user.component.css','../app.component.css']
 })
 export class LoginUserComponent implements OnInit{
 
@@ -20,7 +20,10 @@ export class LoginUserComponent implements OnInit{
       this.message = params['message'];
       if(params['status']){
         this.notification = params['status']
+        this.message = 'usuario registrado con exito'
+
         history.replaceState(null, '', window.location.origin + window.location.pathname);
+
       }
     });
   }

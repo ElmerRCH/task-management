@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
-  styleUrls: ['./register-user.component.css']
+  styleUrls: ['./register-user.component.css','../app.component.css']
 })
 export class RegisterUserComponent {
 
@@ -14,6 +14,9 @@ export class RegisterUserComponent {
     private userService: UserService,
     private router: Router
   ) {}
+
+  notification:boolean = false
+  textNotification:string = 'Error en el llenado'
 
   email: string = '';
   emailPlaceholder: string = '@example.com'
@@ -25,7 +28,6 @@ export class RegisterUserComponent {
   password: string = '';
   helpPassword: boolean = false
   helpPasswordMessage: string = ''
-
 
   checkPassword: string = '';
   passwordAvailable: boolean = false;
@@ -73,7 +75,6 @@ export class RegisterUserComponent {
 
   ngOnInit(): void {
     this.userService.PostRegisterUser().subscribe(users => {
-      console.log(users);
     });
 
   }
@@ -106,14 +107,13 @@ export class RegisterUserComponent {
             }
         }
       );
-
     }else{
       this.password = '';
       this.checkPassword = '';
       this.passwordsMatch = false;
       this.helpPassword = false
+      this.notification = true
 
-      alert('algo salio mal vuelve a intentarlo.')
     }
   }
 }
