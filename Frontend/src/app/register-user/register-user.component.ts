@@ -15,29 +15,39 @@ export class RegisterUserComponent {
   emailPlaceholder: string = '@example.com'
   helpEmailMessage: string = ''
   helpEmail: boolean = false
-  emailAvailable: boolean = true;
+  emailAvailable: boolean = false;
 
   password: string = '';
   checkPassword: string = '';
   passwordPlaceholder: string = '••••••••';
   helpPassword: boolean = false
   helpPasswordMessage: string = ''
+  passwordAvailable: boolean = false;
 
-  validation : boolean = false;
-  passwordsMatch: boolean = true;
+  passwordsMatch: boolean = false;
 
   async onInputChangeEmail() {
 
     const utils = new Utils(this.userService);
     const result = await utils.validationEmail(this.email);
-    [this.helpEmail, this.helpEmailMessage] = result;
+    [this.helpEmail, this.helpEmailMessage,this.emailAvailable] = result;
 
   }
 
   onInputChangePassword() {
-    [this.helpPassword,this.helpPasswordMessage] = Utils.validationPassword(this.password);
+    [this.helpPassword,this.helpPasswordMessage,this.passwordAvailable] = Utils.validationPassword(this.password);
   }
-  
+
+  onInputMatchPassword() {
+    console.log('pass',this.password)
+    console.log('pass-conf',this.checkPassword)
+
+    if (this.password === this.checkPassword){
+      this.passwordsMatch = true
+
+    }
+  }
+
   hasLowerCase(): boolean {
     return /[a-z]/.test(this.password);
   }
@@ -60,9 +70,7 @@ export class RegisterUserComponent {
 
   onSubmit(): void {
 
-    //this.validation = Utils.validationRegister(this.email,this.password,this.checkPassword)
-
-    if (this.password === this.checkPassword && this.validation){
+    if (this.password === this.checkPassword){
 
       const data = {
         'email': this.email,
@@ -86,14 +94,12 @@ export class RegisterUserComponent {
             }
         }
       );
-
+      
     }
     else{
       this.passwordsMatch = false
-      this.password = '';
       this.checkPassword = '';
       this.passwordPlaceholder = 'Contraseñas incorrectas';
-
       console.log('contraseñas no iguales.')
 
     }

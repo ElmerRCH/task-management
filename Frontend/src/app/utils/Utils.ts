@@ -11,7 +11,8 @@ export class Utils {
   };
 
 
-  public async validationEmail(email: string):Promise<[boolean, string]>{
+  public async validationEmail(email: string):Promise<[boolean, string,boolean]>{
+    let emailAvailable = false
 
     let validator = false
     let type_messages = [
@@ -30,25 +31,25 @@ export class Utils {
 
     }
 
-
-    if(email.includes('@') && email.endsWith('.com') ){
+    if(email.includes('@') && email.endsWith('.com') && !email.includes('@.') && email.length > 8 ){
       messages = 'correo correcto'
       validator = true
-
+      emailAvailable = true
       const response = await this.userService.checkEmail({'email':email}).pipe(first()).toPromise();
       if (response.available === false) {
         messages = 'Correo no disponible';
         validator = false
-
+        emailAvailable = false
       }
     }
 
-    return [validator, messages];
+    return [validator, messages,emailAvailable];
   };
 
 
-  public static validationPassword(password:string):[boolean,string]{
+  public static validationPassword(password:string):[boolean,string,boolean]{
     let validator = false
+    let passwordAvailable = false
     let type_messages = ''
 
     if (password.length >= 1 && password.length < 5 ){
@@ -59,10 +60,11 @@ export class Utils {
     if (password.length >= 5 && /[A-Z]/.test(password)){
       validator = true
       type_messages = /[.!#$%^&*]/.test(password) ? 'contraseña muy segura':'contraseña segura'
+      if (type_messages === 'contraseña muy segura'){passwordAvailable = true}
 
     }
-
-    return [validator,type_messages]
+    
+    return [validator,type_messages,passwordAvailable]
   }
 
 }
