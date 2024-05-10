@@ -1,6 +1,7 @@
 import {Utils} from '../utils/Utils'
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
@@ -9,7 +10,10 @@ import { UserService } from '../services/user.service';
 })
 export class RegisterUserComponent {
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   email: string = '';
   emailPlaceholder: string = '@example.com'
@@ -17,12 +21,15 @@ export class RegisterUserComponent {
   helpEmail: boolean = false
   emailAvailable: boolean = false;
 
-  password: string = '';
-  checkPassword: string = '';
   passwordPlaceholder: string = '••••••••';
+  password: string = '';
   helpPassword: boolean = false
   helpPasswordMessage: string = ''
+
+
+  checkPassword: string = '';
   passwordAvailable: boolean = false;
+  helpMatchPasswordMessage: string = ''
 
   passwordsMatch: boolean = false;
 
@@ -39,13 +46,16 @@ export class RegisterUserComponent {
   }
 
   onInputMatchPassword() {
-    console.log('pass',this.password)
-    console.log('pass-conf',this.checkPassword)
+
+    if(this.checkPassword.length > 6){
+      this.helpMatchPasswordMessage = 'contraseñas no son iguales'
+    }
 
     if (this.password === this.checkPassword){
-      this.passwordsMatch = true
+      this.helpMatchPasswordMessage = 'contraseñas correctas'
 
     }
+    this.passwordsMatch = this.password === this.checkPassword ? true : false
   }
 
   hasLowerCase(): boolean {
@@ -77,12 +87,14 @@ export class RegisterUserComponent {
         'password': this.password,
         'conf_password': this.checkPassword,
       };
-      console.log('data::',data)
+
       this.userService.createUser(data).subscribe(
         response => {
+          this.router.navigate(['/'],{queryParams: { message: 'Usuario creado', status: true }});
+          console.log('Usuario creado con éxito:', response);
 
-            console.log('Usuario creado con éxito:', response);
         },
+
         error => {
             if (error.error.available == false){
 
@@ -94,15 +106,14 @@ export class RegisterUserComponent {
             }
         }
       );
-      
-    }
-    else{
-      this.passwordsMatch = false
+
+    }else{
+      this.password = '';
       this.checkPassword = '';
-      this.passwordPlaceholder = 'Contraseñas incorrectas';
-      console.log('contraseñas no iguales.')
+      this.passwordsMatch = false;
+      this.helpPassword = false
 
+      alert('algo salio mal vuelve a intentarlo.')
     }
-
   }
 }

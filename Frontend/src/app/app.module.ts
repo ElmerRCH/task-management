@@ -6,11 +6,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 @NgModule({
   declarations: [
     AppComponent,
     RegisterUserComponent,
-    LoginUserComponent
+    LoginUserComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
