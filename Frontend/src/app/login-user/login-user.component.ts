@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Utils} from '../utils/Utils'
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-login-user',
@@ -7,11 +8,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./login-user.component.css','../app.component.css']
 })
 export class LoginUserComponent implements OnInit{
+  Utils = Utils;
 
   constructor(
     private route: ActivatedRoute
   ) {}
-
+  showPassword:boolean = false
   message: string = '';
   notification: boolean = false
 
@@ -27,6 +29,8 @@ export class LoginUserComponent implements OnInit{
       }
     });
   }
-
+  togglePasswordVisibility(): void {
+    this.showPassword = Utils.PasswordVisibility(this.showPassword);
+  }
 
 }

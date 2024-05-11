@@ -12,7 +12,23 @@
   display: flex;
 }
 
-.shadows{
+@keyframes toggleShadow {
 
+  0% {
+    box-shadow: 0px 4px 25px rgba(2, 249, 253, 0.615);
+  }
+  25% {
+    box-shadow: 0px 4px 50px rgba(200, 155, 200, 0.5);
+  }
+  50%{
+    box-shadow: 0px 4px 100px rgba(2, 249, 253, 0.615);
 
+  }
+  100% {
+    box-shadow: 0px 4px 125px rgba(200, 155, 200, 0.5);
+  }
+}
+
+.shadows-on{
+  animation: toggleShadow 50s ease-in-out alternate-reverse infinite;
 }
