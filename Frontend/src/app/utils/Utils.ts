@@ -63,8 +63,13 @@ export class Utils {
       if (type_messages === 'contraseña muy segura'){passwordAvailable = true}
 
     }
-    
+
     return [validator,type_messages,passwordAvailable]
   }
 
+
+  public static PasswordVisibility(showPassword: boolean):boolean{
+      
+    return !showPassword;
+  }
 }

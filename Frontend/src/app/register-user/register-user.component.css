@@ -48,10 +48,10 @@
 }
 .container-help-password{
   border: 2px solid lightgreen;
-  height: 20vh;
   margin-top:2%;
   border-radius: 10px;
   color: white;
+
 }
 .container-help-password p{
   padding-top:10px;
@@ -60,7 +60,6 @@
 
 .container-help-password ul{
   margin-left:10%;
-
   list-style-type: disc
 }
 .container-help-password-green{

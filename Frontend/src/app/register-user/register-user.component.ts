@@ -8,13 +8,15 @@ import { Router } from '@angular/router';
   templateUrl: './register-user.component.html',
   styleUrls: ['./register-user.component.css','../app.component.css']
 })
+
 export class RegisterUserComponent {
+  Utils = Utils;
 
   constructor(
     private userService: UserService,
     private router: Router
   ) {}
-
+  showPassword:boolean = false
   notification:boolean = false
   textNotification:string = 'Error en el llenado'
 
@@ -77,6 +79,10 @@ export class RegisterUserComponent {
     this.userService.PostRegisterUser().subscribe(users => {
     });
 
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = Utils.PasswordVisibility(this.showPassword);
   }
 
   onSubmit(): void {

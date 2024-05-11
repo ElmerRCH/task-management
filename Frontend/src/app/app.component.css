@@ -1,7 +1,18 @@
 .container-notifications{
-
   width: 25%;
   margin-left: auto;
   display: flex;
   justify-content: center;
+}
+.container-view-pass-check{
+
+  margin: auto;
+  width: 3vw;
+  height: 3vh;
+  display: flex;
+}
+
+.shadows{
+
+
 }
