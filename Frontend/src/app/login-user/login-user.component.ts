@@ -1,6 +1,8 @@
 import {Utils} from '../utils/Utils'
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../services/user.service';
+
 
 @Component({
   selector: 'app-login-user',
@@ -11,8 +13,13 @@ export class LoginUserComponent implements OnInit{
   Utils = Utils;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private userService: UserService,
   ) {}
+
+  email: string = '';
+  emailAvailable: boolean = false;
+
   showPassword:boolean = false
   message: string = '';
   notification: boolean = false
@@ -32,5 +39,19 @@ export class LoginUserComponent implements OnInit{
   togglePasswordVisibility(): void {
     this.showPassword = Utils.PasswordVisibility(this.showPassword);
   }
+  async onSubmit() {
+    const utils = new Utils(this.userService);
+    const result = await utils.validationEmail(this.email,true);
+    [, ,this.emailAvailable] = result;
+    if(this.emailAvailable){
+      alert('echo.')
+    }
+    else{
+      alert('invalido')
+    }
+
+
+  }
+
 
 }

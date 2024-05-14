@@ -40,7 +40,7 @@ export class RegisterUserComponent {
   async onInputChangeEmail() {
 
     const utils = new Utils(this.userService);
-    const result = await utils.validationEmail(this.email);
+    const result = await utils.validationEmail(this.email,true);
     [this.helpEmail, this.helpEmailMessage,this.emailAvailable] = result;
 
   }
@@ -77,6 +77,7 @@ export class RegisterUserComponent {
 
   ngOnInit(): void {
     this.userService.PostRegisterUser().subscribe(users => {
+
     });
 
   }
@@ -94,31 +95,30 @@ export class RegisterUserComponent {
         'password': this.password,
         'conf_password': this.checkPassword,
       };
-
+      
       this.userService.createUser(data).subscribe(
         response => {
           this.router.navigate(['/'],{queryParams: { message: 'Usuario creado', status: true }});
           console.log('Usuario creado con éxito:', response);
 
         },
-
         error => {
-            if (error.error.available == false){
-
-                this.email = '';
-                this.emailPlaceholder = 'correo no disponible'
-                this.emailAvailable = false;
-                console.log('type error::::: = ',error.error.available);
-
-            }
+          if (error.error.available == false){
+            this.emailAvailable = false
+          }
         }
       );
-    }else{
+    }else{this.emailAvailable = false}
+
+    if(!this.emailAvailable){
       this.password = '';
       this.checkPassword = '';
       this.passwordsMatch = false;
       this.helpPassword = false
       this.notification = true
+      this.email = '';
+      this.helpEmailMessage = ''
+      this.helpEmail = false
 
     }
   }

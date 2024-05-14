@@ -11,7 +11,7 @@ export class Utils {
   };
 
 
-  public async validationEmail(email: string):Promise<[boolean, string,boolean]>{
+  public async validationEmail(email: string,register:boolean = false):Promise<[boolean, string,boolean]>{
     let emailAvailable = false
 
     let validator = false
@@ -35,12 +35,16 @@ export class Utils {
       messages = 'correo correcto'
       validator = true
       emailAvailable = true
-      const response = await this.userService.checkEmail({'email':email}).pipe(first()).toPromise();
-      if (response.available === false) {
-        messages = 'Correo no disponible';
-        validator = false
-        emailAvailable = false
+      // parte dinamica entre login y registro
+      if(register){
+        const response = await this.userService.checkEmail({'email':email}).pipe(first()).toPromise();
+        if (response.available === false) {
+          messages = 'Correo no disponible';
+          validator = false
+          emailAvailable = false
+        }
       }
+
     }
 
     return [validator, messages,emailAvailable];
@@ -59,7 +63,7 @@ export class Utils {
 
     if (password.length >= 5 && /[A-Z]/.test(password)){
       validator = true
-      type_messages = /[.!#$%^&*]/.test(password) ? 'contraseña muy segura':'contraseña segura'
+      type_messages = /[.!#$%^&*@]/.test(password) ? 'contraseña muy segura':'contraseña segura'
       if (type_messages === 'contraseña muy segura'){passwordAvailable = true}
 
     }
@@ -69,7 +73,7 @@ export class Utils {
 
 
   public static PasswordVisibility(showPassword: boolean):boolean{
-      
+
     return !showPassword;
   }
 }

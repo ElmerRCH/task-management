@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule, 
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

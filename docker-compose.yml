@@ -19,7 +19,7 @@ services:
     volumes:
       - ./Frontend:/app:delegated
     command: ["sh", "-c", "npm install && ng serve --host 0.0.0.0 --port 4209", "--live-reload"]
-    
+  
   mongodb:
     image: mongo  # Usa la imagen oficial de MongoDB
     ports:

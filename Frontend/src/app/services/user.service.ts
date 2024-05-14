@@ -23,7 +23,6 @@ export class UserService {
     );
   }
 
-
   createUser(data: any): Observable<any> {
     return this.http.post(this.apiUrl, data).pipe(
       catchError(error => {
