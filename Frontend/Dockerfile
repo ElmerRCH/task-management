@@ -1,5 +1,5 @@
 # Utilizamos la imagen de Node.js como base
-FROM node:16
+FROM node:20
 
 # Instalamos Angular CLI globalmente
 RUN npm install -g @angular/cli@16

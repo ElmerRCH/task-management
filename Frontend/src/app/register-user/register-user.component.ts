@@ -1,7 +1,9 @@
 import {Utils} from '../utils/Utils'
-import { Component } from '@angular/core';
-import { UserService } from '../services/user.service';
+
 import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import * as CryptoJS from 'crypto-js';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-register-user',
@@ -90,12 +92,19 @@ export class RegisterUserComponent {
 
     if (this.password === this.checkPassword){
 
+      this.password = CryptoJS.AES.encrypt(this.password,'confidential').toString();
+      this.checkPassword = CryptoJS.AES.encrypt(this.checkPassword,'confidential').toString();
+
+      console.log('password:::',this.password)
+      console.log('password check:::',this.password)
+      
+
       const data = {
         'email': this.email,
         'password': this.password,
         'conf_password': this.checkPassword,
       };
-      
+
       this.userService.createUser(data).subscribe(
         response => {
           this.router.navigate(['/'],{queryParams: { message: 'Usuario creado', status: true }});

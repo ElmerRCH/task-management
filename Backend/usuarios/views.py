@@ -32,9 +32,8 @@ def registrar_user(request):
     if Usuario.objects.filter(email=request.data.get('email')).exists():
         return Response({"available":False}, status=status.HTTP_400_BAD_REQUEST)
 
-    if request.data['password'] == request.data['conf_password']:
-        data = UsuarioData(request.data['email'],request.data['password'])
-        
+    if request.data['password'] == request.data['conf_password']:   
+        data = UsuarioData(request.data['email'],request.data['password'])        
         if data.gmail_validator() and data.password_validador():
             
             user = Usuario.objects.create(
