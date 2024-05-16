@@ -78,9 +78,6 @@ export class RegisterUserComponent {
   }
 
   ngOnInit(): void {
-    this.userService.PostRegisterUser().subscribe(users => {
-
-    });
 
   }
 
@@ -97,7 +94,7 @@ export class RegisterUserComponent {
 
       console.log('password:::',this.password)
       console.log('password check:::',this.password)
-      
+
 
       const data = {
         'email': this.email,

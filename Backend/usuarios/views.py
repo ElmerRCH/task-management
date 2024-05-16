@@ -50,10 +50,3 @@ def login_user(request):
     if Usuario.objects.filter(email=request.data.get('email')).exists():
         return Response({"available":False}, status=status.HTTP_400_BAD_REQUEST)
     
-  
-@api_view(['GET'])
-def log_user(request):
-    
-    data = UsuarioData('pruebas@gmail.com','Pass1do2.')
-    
-    return Response(data.password_validador())

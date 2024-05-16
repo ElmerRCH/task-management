@@ -24,14 +24,14 @@ class Usuario:
     def password_validador(self):
         pass_validator = False
 
-        key = 'confidential'
+        """ key = 'confidential'
         cipher = AES.new(key, AES.MODE_CBC)
         decrypted_data = unpad(cipher.decrypt(base64.b64decode(self.password)), AES.block_size)
 
         # Convertir los datos decodificados a una cadena de texto
         self.password = decrypted_data.decode('utf-8')
     
-        print('prueba pass::',self.password)
+        print('prueba pass::',self.password)"""
         
         if len(self.password) >= 8:
             # Verificar la presencia de caracteres especiales válidos
