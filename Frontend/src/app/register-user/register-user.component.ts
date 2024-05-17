@@ -48,7 +48,7 @@ export class RegisterUserComponent {
   onInputChangePassword() {
     [this.helpPassword,this.helpPasswordMessage,this.passwordAvailable] = Utils.validationPassword(this.password);
   }
-  
+
   onInputMatchPassword() {
 
     if(this.checkPassword.length > 6){
@@ -91,7 +91,7 @@ export class RegisterUserComponent {
       this.email = Utils.Encript( this.email)
       this.password = Utils.Encript(this.password)
       this.checkPassword = this.password
-
+      
       const data = {
         'email': this.email,
         'password': this.password,

@@ -1,8 +1,7 @@
 import {Utils} from '../utils/Utils'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-
 
 @Component({
   selector: 'app-login-user',
@@ -14,6 +13,7 @@ export class LoginUserComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private userService: UserService,
   ) {}
 
@@ -45,18 +45,18 @@ export class LoginUserComponent implements OnInit{
     const utils = new Utils(this.userService);
     const result = await utils.validationEmail(this.email,false);
     [, ,this.emailAvailable] = result;
-    [,,this.passwordAvailable] =Utils.validationPassword(this.password);
+    [, ,this.passwordAvailable] =Utils.validationPassword(this.password);
     console.log('email',this.emailAvailable)
     console.log('pass',this.passwordAvailable)
 
 
     if(this.emailAvailable && this.passwordAvailable ){
-      let data = {
+      this.email = Utils.Encript( this.email)
+      this.password = Utils.Encript(this.password)
 
-      }
-      this.userService.login(data).subscribe(
+      this.userService.login({'email': this.email,'password': this.password,}).subscribe(
         response => {
-          console.log('log correcto')
+          this.router.navigate(['task']);
         },
         error => {
           console.log('log correcto')

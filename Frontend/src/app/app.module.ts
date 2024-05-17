@@ -7,13 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { TaskComponent } from './task/task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterUserComponent,
     LoginUserComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,
