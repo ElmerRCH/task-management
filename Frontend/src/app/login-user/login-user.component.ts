@@ -20,7 +20,10 @@ export class LoginUserComponent implements OnInit{
   email: string = '';
   emailAvailable: boolean = false;
 
+  password: string = ''
+  passwordAvailable:boolean = false
   showPassword:boolean = false
+  // para notificaciones
   message: string = '';
   notification: boolean = false
 
@@ -30,26 +33,40 @@ export class LoginUserComponent implements OnInit{
       if(params['status']){
         this.notification = params['status']
         this.message = 'usuario registrado con exito'
-
         history.replaceState(null, '', window.location.origin + window.location.pathname);
-
       }
     });
   }
+
   togglePasswordVisibility(): void {
     this.showPassword = Utils.PasswordVisibility(this.showPassword);
   }
   async onSubmit() {
     const utils = new Utils(this.userService);
-    const result = await utils.validationEmail(this.email,true);
+    const result = await utils.validationEmail(this.email,false);
     [, ,this.emailAvailable] = result;
-    if(this.emailAvailable){
-      alert('echo.')
+    [,,this.passwordAvailable] =Utils.validationPassword(this.password);
+    console.log('email',this.emailAvailable)
+    console.log('pass',this.passwordAvailable)
+
+
+    if(this.emailAvailable && this.passwordAvailable ){
+      let data = {
+
+      }
+      this.userService.login(data).subscribe(
+        response => {
+          console.log('log correcto')
+        },
+        error => {
+          console.log('log correcto')
+
+        }
+      );
     }
     else{
       alert('invalido')
     }
-
 
   }
 

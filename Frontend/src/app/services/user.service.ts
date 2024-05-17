@@ -32,4 +32,14 @@ export class UserService {
     );
   }
 
+  login(data: any): Observable<any> {
+    return this.http.post('http://localhost:8000/usuario/login/', data).pipe(
+      catchError(error => {
+        console.error('api log caida:', error);
+        throw error;
+      })
+    );
+  }
+
+
 }

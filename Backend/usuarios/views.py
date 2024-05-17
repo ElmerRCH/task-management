@@ -28,14 +28,19 @@ def verificar_email(request):
 
 @api_view(['POST'])
 def registrar_user(request):
-    print('request',request.data)
+
+    if not all(key in request.data.keys() for key in ['password', 'conf_password', 'email']):
+        return Response({"available": False}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+    email, password, conf_pass = UsuarioData.decrypt([request.data['email'],request.data['password'],request.data['conf_password']], 'confidential1234')
     if Usuario.objects.filter(email=request.data.get('email')).exists():
         return Response({"available":False}, status=status.HTTP_400_BAD_REQUEST)
-
-    if request.data['password'] == request.data['conf_password']:   
-        data = UsuarioData(request.data['email'],request.data['password'])        
-        if data.gmail_validator() and data.password_validador():
-            
+    
+    if password == conf_pass:   
+        
+        data = UsuarioData(email,password)        
+        if data.gmail_validator() and data.password_validador():            
             user = Usuario.objects.create(
                 email=request.data['email'],
                 password=make_password(request.data['password']),
@@ -47,6 +52,12 @@ def registrar_user(request):
 @api_view(['POST'])
 def login_user(request):
     
-    if Usuario.objects.filter(email=request.data.get('email')).exists():
-        return Response({"available":False}, status=status.HTTP_400_BAD_REQUEST)
+    return
+    
+      
+@api_view(['POST'])
+def desencript(request):
+    
+    decrypted_data = UsuarioData.decrypt(request.data['pass'], 'confidential1234')
+    return Response({'echo':decrypted_data})
     

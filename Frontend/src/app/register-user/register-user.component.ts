@@ -1,8 +1,6 @@
 import {Utils} from '../utils/Utils'
-
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import * as CryptoJS from 'crypto-js';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -50,7 +48,7 @@ export class RegisterUserComponent {
   onInputChangePassword() {
     [this.helpPassword,this.helpPasswordMessage,this.passwordAvailable] = Utils.validationPassword(this.password);
   }
-
+  
   onInputMatchPassword() {
 
     if(this.checkPassword.length > 6){
@@ -85,16 +83,14 @@ export class RegisterUserComponent {
     this.showPassword = Utils.PasswordVisibility(this.showPassword);
   }
 
+
   onSubmit(): void {
 
     if (this.password === this.checkPassword){
 
-      this.password = CryptoJS.AES.encrypt(this.password,'confidential').toString();
-      this.checkPassword = CryptoJS.AES.encrypt(this.checkPassword,'confidential').toString();
-
-      console.log('password:::',this.password)
-      console.log('password check:::',this.password)
-
+      this.email = Utils.Encript( this.email)
+      this.password = Utils.Encript(this.password)
+      this.checkPassword = this.password
 
       const data = {
         'email': this.email,
@@ -105,8 +101,6 @@ export class RegisterUserComponent {
       this.userService.createUser(data).subscribe(
         response => {
           this.router.navigate(['/'],{queryParams: { message: 'Usuario creado', status: true }});
-          console.log('Usuario creado con éxito:', response);
-
         },
         error => {
           if (error.error.available == false){
@@ -125,6 +119,9 @@ export class RegisterUserComponent {
       this.email = '';
       this.helpEmailMessage = ''
       this.helpEmail = false
+      this.checkPassword = ''
+      this.password = ''
+
 
     }
   }
