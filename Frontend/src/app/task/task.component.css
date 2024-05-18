@@ -1,7 +1,21 @@
-.table-container{
-  margin: auto;
-  margin-top:10%;
 
-  width: 50%;
+.tasks-container{
+  border: 2px solid gray;
+  margin-top:10%;
+  height:50vh;
+  display: flex;
+  justify-content: center;
+
+}
+
+
+.table-container{
+  width: 60%;
+  margin: 10px;
+
+}
+
+.controllers-containers{
+  display: block;
 
 }
