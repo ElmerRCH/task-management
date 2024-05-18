@@ -8,6 +8,7 @@ import { LoginUserComponent } from './login-user/login-user.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { TaskComponent } from './task/task.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { TaskComponent } from './task/task.component';
     RegisterUserComponent,
     LoginUserComponent,
     NotificationsComponent,
-    TaskComponent
+    TaskComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
