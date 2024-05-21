@@ -1,6 +1,5 @@
 
 .tasks-container{
-  border: 2px solid gray;
   margin-top:10%;
   height:50vh;
   display: flex;
@@ -17,6 +16,9 @@
 
 .controllers-containers{
   display: block;
+  box-shadow: 0px 4px 50px rgba(120, 205, 133, 0.5);
+  padding-right: 10px;
+  padding-left: 10px;
 
 }
 
