@@ -19,3 +19,11 @@
   display: block;
 
 }
+
+.duration{
+  color: white;
+  width: 100%;
+  padding: 3.5%;
+  border-radius: 10px;
+  @apply bg-gray-900
+}
