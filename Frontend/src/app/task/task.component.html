@@ -1,4 +1,4 @@
-<app-nav-bar (sendData)="handleData($event)"></app-nav-bar>
+<app-nav-bar (sendData)="receiveMessage($event)"></app-nav-bar>
 <div  class="tasks-container ">
   <div class="table-container ">
     <div class=" relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -46,7 +46,8 @@
       </table>
     </div>
   </div>
-  <div *ngIf="controller" class="controllers-containers">
+
+  <div [ngClass]="{'shadow-green': typeController == 'new','shadow-orange': typeController == 'edit','shadow-red': typeController == 'delete'}" *ngIf="controller" class="controllers-containers">
 
     <form class="max-w-sm mx-auto">
       <div class="mb-5">

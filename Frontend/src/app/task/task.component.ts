@@ -13,12 +13,19 @@ export class TaskComponent {
   controller = false
   receivedData = '';
 
-  handleData(data: string) {
-    this.receivedData = data;
-  }
-
   receiveMessage($event: string) {
     this.typeController = $event;
+    switch ($event) {
+      case 'new':
+          this.controller = true
+        break;
+      case 'edit':
+        this.controller = true
+        break;
+      case 'delete':
+        this.controller = true
+        break;
+    }
   }
 
 }

@@ -8,12 +8,9 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class NavBarComponent {
   @Output() sendData = new EventEmitter<string>();
 
-  sendMessage(){
+  emitData(email: string) {
 
-  }
-  emitData() {
-    const data = 'Información desde NavBar';
-    this.sendData.emit(data);
+    this.sendData.emit(email);
   }
 
 }
