@@ -7,12 +7,11 @@ export class Utils {
 
 
   constructor(private userService: UserService) {}
-
+  
   public static validationRegister(email: string, password: string, checkPassword: string,): boolean {
 
     return true
   };
-
 
   public async validationEmail(email: string,register:boolean = false):Promise<[boolean, string,boolean]>{
     let emailAvailable = false
