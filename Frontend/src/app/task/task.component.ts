@@ -40,7 +40,7 @@ export class TaskComponent {
     switch (this.typeController) {
       case 'new':
         Task.createTask({'echo':'01'})
-
+        
       break;
 
     }
