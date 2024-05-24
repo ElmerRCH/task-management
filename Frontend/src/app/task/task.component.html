@@ -1,116 +1,100 @@
-<div class="table-container">
+<app-nav-bar (sendData)="receiveMessage($event)"></app-nav-bar>
+<div  class="tasks-container ">
+  <div class="table-container ">
+    <div class=" relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs  uppercase bg-gray-700 text-gray-400">
+              <tr>
+                  <th scope="col" class="px-6 py-3">
+                  id
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Tasks
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                      Data create
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Duration
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    deadline
+                  </th>
+
+              </tr>
+          </thead>
+          <tbody>
+              <tr class="  odd:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap text-white">
+                  1
+                </th>
+                  <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                      Apple MacBook Pro 17"
+                  </th>
+                  <td class="px-6 py-4">
+                      Silver
+                  </td>
+                  <td class="px-6 py-4">
+                      Laptop
+                  </td>
+                  <td class="px-6 py-4">
+                      $2999
+                  </td>
+
+              </tr>
+          </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div [ngClass]="{'shadow-green': typeController == 'new','shadow-orange': typeController == 'edit','shadow-red': typeController == 'delete'}" *ngIf="controller" class="controllers-containers">
+
+    <form (submit)="onSubmit()" #form="ngForm"  action="#" class="max-w-sm mx-auto">
+      <div *ngIf="typeController == 'edit' || typeController == 'delete'" class="mb-5">
+        <label for="text" class="block mb-2 text-sm font-medium text-white">id</label>
+        <input type="text" id="text" placeholder="id number:" class="shadow-sm  border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"  required />
+      </div>
+      <div class="mb-5">
+        <label for="text" class="block mb-2 text-sm font-medium text-white">name task</label>
+        <input [(ngModel)]="nameTask" name="nameTask" type="text" id="text" placeholder="write one task" class="shadow-sm  border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"  required />
+      </div>
+      <div class="mb-5">
+        <label for="date" class="block mb-2 text-sm font-medium text-white">Data create</label>
+        <div class="relative max-w-sm">
+          <div class=" absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+            </svg>
+          </div>
+          <input datepicker [(ngModel)]="dateinit" name="dateinit" type="text" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-green dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+        </div>
 
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-              <th scope="col" class="px-6 py-3">
-                  Product name
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Color
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Category
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Price
-              </th>
-              <th scope="col" class="px-6 py-3">
-                  Action
-              </th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Apple MacBook Pro 17"
-              </th>
-              <td class="px-6 py-4">
-                  Silver
-              </td>
-              <td class="px-6 py-4">
-                  Laptop
-              </td>
-              <td class="px-6 py-4">
-                  $2999
-              </td>
-              <td class="px-6 py-4">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-              </td>
-          </tr>
-          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Microsoft Surface Pro
-              </th>
-              <td class="px-6 py-4">
-                  White
-              </td>
-              <td class="px-6 py-4">
-                  Laptop PC
-              </td>
-              <td class="px-6 py-4">
-                  $1999
-              </td>
-              <td class="px-6 py-4">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-              </td>
-          </tr>
-          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Magic Mouse 2
-              </th>
-              <td class="px-6 py-4">
-                  Black
-              </td>
-              <td class="px-6 py-4">
-                  Accessories
-              </td>
-              <td class="px-6 py-4">
-                  $99
-              </td>
-              <td class="px-6 py-4">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-              </td>
-          </tr>
-          <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Google Pixel Phone
-              </th>
-              <td class="px-6 py-4">
-                  Gray
-              </td>
-              <td class="px-6 py-4">
-                  Phone
-              </td>
-              <td class="px-6 py-4">
-                  $799
-              </td>
-              <td class="px-6 py-4">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-              </td>
-          </tr>
-          <tr>
-              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  Apple Watch 5
-              </th>
-              <td class="px-6 py-4">
-                  Red
-              </td>
-              <td class="px-6 py-4">
-                  Wearables
-              </td>
-              <td class="px-6 py-4">
-                  $999
-              </td>
-              <td class="px-6 py-4">
-                  <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-              </td>
-          </tr>
-      </tbody>
-  </table>
+      </div>
+      <div class="mb-5">
+        <label  for="duration" class="block mb-2 text-sm font-medium text-white">Choose an option :</label>
+        <select [(ngModel)]="duration" name="duration" for="duration" class="duration block mb-2 text-sm font-medium text-gray-900 ">
+          <option value="">Duration</option>
+          <option value="1">30 minutos</option>
+          <option value="2">1 hora</option>
+        </select>
+      </div>
+      <div class="mb-5">
+        <label for="repeat-password" class="block mb-2 text-sm font-medium text-white">DeadLine</label>
+        <div class="relative max-w-sm">
+          <div class=" absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+            </svg>
+          </div>
+          <input datepicker [(ngModel)]="deadLine" name="deadLine" type="text" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-green dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+        </div>
+      </div>
+      <button [ngClass]="{'button-green': typeController == 'new','button-orange': typeController == 'edit','button-red': typeController == 'delete'}"  type="submit" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">{{textButton}}</button>
+    </form>
+    
+  </div>
 </div>
 
 
-</div>
+
