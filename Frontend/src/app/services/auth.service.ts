@@ -9,14 +9,14 @@ export class AuthService {
   private apiUrl = 'http://localhost:8000/usuario';
 
   constructor(private http: HttpClient, private router: Router) { }
-  
+
   login(email: string, password: string) {
     return this.http.post<any>(`${this.apiUrl}/token/`, { email, password }).subscribe(response => {
       localStorage.setItem('access_token', response.access);
       this.router.navigate(['dashboard']);
     });
   }
-
+  
   logout() {
     localStorage.removeItem('access_token');
     this.router.navigate(['login']);
