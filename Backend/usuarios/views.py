@@ -10,7 +10,11 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView,)
+
 from Backend.util.util_entry_data import Usuario as UsuarioData
+
 
 from django.utils import timezone
 from django.contrib.auth import logout
@@ -21,6 +25,20 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all()
     serializer_class = UsersSerializer
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        # Puedes añadir datos adicionales al payload del token aquí
+        data.update({'email': self.user.email})
+        return data
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+
+
+
 
 
 @api_view(['POST'])
@@ -44,30 +62,32 @@ def registrar_user(request):
         data = UsuarioData(email,password)        
         if data.gmail_validator() and data.password_validador():                        
             user = User.objects.create_user(
-                'pruebas1',
-                email= email,
+                username= email,
                 password = password,
             )
             user.save()
-            login(request, user)
+            # login(request, user)
     return Response({"registrado":True}, status=status.HTTP_200_OK)
     
 @api_view(['POST'])
 def login_user(request):
     response = status.HTTP_400_BAD_REQUEST
     log = False
-    if not all(key in request.data.keys() for key in ['password', 'email']):
+    if not all(key in request.data.keys() for key in ['password', 'username']):
         return Response({"available": False}, status=status.HTTP_400_BAD_REQUEST)
-
-    email, password = UsuarioData.decrypt([request.data['email'],request.data['password']], 'confidential1234')
-    if User.objects.filter(email=email).exists():
-        usuario = User.objects.get(email=email)
+    email, password  = request.data['username'],request.data['password']
+    print('data:',email, password)
+    # email, password = UsuarioData.decrypt([request.data['username'],request.data['password']], 'confidential1234')
+    if User.objects.filter(username=email).exists():
+        usuario = User.objects.get(username=email)
         if check_password(password, usuario.password): 
-
-            log = True
+            log = True   
+            token_serializer = TokenObtainPairSerializer(data=request.data)
+            if token_serializer.is_valid():
+                tokens = token_serializer.validated_data
             response = status.HTTP_200_OK
                  
-    return Response({"log":log}, status=response)
+    return Response({"log":log,"data":tokens}, status=response)
     
 def set_session_data(request):
     request.session['favorite_color'] = 'blue'
