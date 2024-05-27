@@ -1,9 +1,25 @@
 from django.urls import path,include
 from rest_framework import routers
 from . import views
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 router = routers.DefaultRouter()
 router.register(r'login-test',views.UserViewSet)
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        # Puedes añadir datos adicionales al payload del token aquí
+        data.update({'email': self.user.email})
+        return data
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
 
 urlpatterns = [
     
@@ -11,9 +27,9 @@ urlpatterns = [
     path('registrar/', views.registrar_user, name='registrar_user'),
     path('login/', views.login_user, name='login_user'),
     path('set_session_data/', views.set_session_data, name='set_session_data'),
-    path('generate_csrf_token/', views.generate_csrf_token, name='generate_csrf_token'),
     
-    path('desencript/', views.desencript, name='desencript'),
     path('verificar-email/', views.verificar_email, name='verificar_email'),
+    
+    path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair')
     
 ]
