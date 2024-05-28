@@ -16,7 +16,6 @@ export class Task {
       }
     );
     this.taskService.newTask()
-    console.log('data:',data)
     return true
   };
 

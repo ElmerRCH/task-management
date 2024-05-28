@@ -3,11 +3,11 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-
+router.register(r'get-task',views.TaskViewset)
 
 urlpatterns = [
     
     path('', include(router.urls)),
-    path('token/', views.verificar_task, name='verificar_task'),
+    path('token/', views.add_task, name='add_task'),
     
 ]

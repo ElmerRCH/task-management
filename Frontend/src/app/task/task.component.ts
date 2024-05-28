@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild,ElementRef } from '@angular/core';
 import { Task } from './task';
 import { TaskServices } from "../services/tasks.service"
 
@@ -17,9 +17,11 @@ export class TaskComponent {
   textButton = 'new task'
 
   nameTask = ''
-  dateinit = ''
+  //dateinit: any;
+  @ViewChild('dateInput') dateInput!: ElementRef;
   duration = ''
-  deadLine = ''
+  //deadLine = ''
+  @ViewChild('dateDeadInput') deadLine!: ElementRef;
 
   receiveMessage($event: string) {
     this.typeController = $event;
@@ -40,12 +42,27 @@ export class TaskComponent {
   }
 
   onSubmit(): void {
+    const dateinit = this.dateInput.nativeElement.value;
+    const deadline = this.deadLine.nativeElement.value;
 
+    console.log('name::',this.nameTask)
+    console.log('fecha::',dateinit)
+    console.log('duration::',this.duration)
+    console.log('deadline::',deadline)
+
+    let data = {}
+
+    //----------------------------------------------
     const task = new Task(this.taskServices);
     switch (this.typeController) {
       case 'new':
-        
-        task.createTask({'echo':'01'})
+        data = {
+          'name':this.nameTask,
+          'dateinit':dateinit,
+          'duration':this.duration,
+          'deadLine':deadline,
+        }
+        task.createTask(data)
 
       break;
 
