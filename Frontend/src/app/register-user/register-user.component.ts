@@ -11,7 +11,7 @@ import { UserService } from '../services/user.service';
 
 export class RegisterUserComponent {
   Utils = Utils;
-
+  
   constructor(
     private userService: UserService,
     private router: Router

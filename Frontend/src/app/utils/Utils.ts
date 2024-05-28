@@ -5,9 +5,9 @@ import { UserService } from '../services/user.service'
 export class Utils {
   private static key = CryptoJS.enc.Utf8.parse('confidential1234');
 
-
-  constructor(private userService: UserService) {}
   
+  constructor(private userService: UserService) {}
+
   public static validationRegister(email: string, password: string, checkPassword: string,): boolean {
 
     return true

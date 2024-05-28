@@ -1,11 +1,24 @@
+import { TaskServices } from '../services/tasks.service';
+
 
 export class Task {
+  constructor(private taskService: TaskServices) {}
 
 
-  public static createTask(data:object): boolean {
+  public createTask(data:object): boolean {
+
+    this.taskService.newTask().subscribe(
+      response => {
+        console.log('funciono')
+      },
+      error => {
+        console.log('fallo')
+      }
+    );
+    this.taskService.newTask()
     console.log('data:',data)
     return true
   };
-  
+
 
 }

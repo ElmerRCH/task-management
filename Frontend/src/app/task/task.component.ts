@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Task } from './task';
+import { TaskServices } from "../services/tasks.service"
 
 @Component({
   selector: 'app-task',
@@ -7,7 +8,10 @@ import { Task } from './task';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent {
-
+  Task = Task;
+  constructor(
+    private taskServices: TaskServices,
+  ) {}
   typeController = 'new';
   controller = true
   textButton = 'new task'
@@ -37,10 +41,12 @@ export class TaskComponent {
 
   onSubmit(): void {
 
+    const task = new Task(this.taskServices);
     switch (this.typeController) {
       case 'new':
-        Task.createTask({'echo':'01'})
         
+        task.createTask({'echo':'01'})
+
       break;
 
     }

@@ -1,20 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from django.contrib.auth.hashers import check_password,make_password
-from werkzeug.security import generate_password_hash, check_password_hash
+from django.contrib.auth.hashers import check_password
 from .serializer import UsersSerializer
 
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.permissions import IsAuthenticated , AllowAny
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView,)
-
 from Backend.util.util_entry_data import Usuario as UsuarioData
-
 
 from django.utils import timezone
 from django.contrib.auth import logout
@@ -37,17 +35,15 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-
-
-
-
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def verificar_email(request):
     
     exist = False if User.objects.filter(email=request.data.get('email')).exists() else True
     return Response({"available":exist}, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def registrar_user(request):
 
     if not all(key in request.data.keys() for key in ['password', 'conf_password', 'email']):
@@ -68,10 +64,10 @@ def registrar_user(request):
             user.save()
             # login(request, user)
     return Response({"registrado":True}, status=status.HTTP_200_OK)
-    
+ 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def login_user(request):
-    print('llego..................')
     response = status.HTTP_400_BAD_REQUEST
     log = False
     tokens = {

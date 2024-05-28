@@ -32,7 +32,7 @@ export class UserService {
       })
     );
   }
-
+  
   login(data: any): Observable<any> {
     return this.http.post<AuthResponse>('http://localhost:8000/usuario/login/', data).pipe(
       tap(response => {
@@ -50,7 +50,7 @@ export class UserService {
   getAccessToken(): string | null {
     return localStorage.getItem('access_token');
   }
-  
+
   logout(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');

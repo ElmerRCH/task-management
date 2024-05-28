@@ -6,7 +6,7 @@ import { UserService } from '../services/user.service';
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
   constructor(private userService: UserService) {}
-
+  
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Obtén el token de acceso del servicio de usuario
     const accessToken = this.userService.getAccessToken();
