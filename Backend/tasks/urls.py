@@ -9,5 +9,7 @@ urlpatterns = [
     
     path('', include(router.urls)),
     path('token/', views.add_task, name='add_task'),
+    path('verific-exist/', views.verific_exist, name='verific_exist'),
+    
     
 ]

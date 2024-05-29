@@ -11,7 +11,7 @@ import { UserService } from '../services/user.service';
 
 export class RegisterUserComponent {
   Utils = Utils;
-  
+
   constructor(
     private userService: UserService,
     private router: Router
@@ -42,7 +42,7 @@ export class RegisterUserComponent {
     const utils = new Utils(this.userService);
     const result = await utils.validationEmail(this.email,true);
     [this.helpEmail, this.helpEmailMessage,this.emailAvailable] = result;
-
+    
   }
 
   onInputChangePassword() {

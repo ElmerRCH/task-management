@@ -1,4 +1,5 @@
 import { TaskServices } from '../services/tasks.service';
+import { first } from 'rxjs/operators';
 
 
 export class Task {
@@ -17,6 +18,15 @@ export class Task {
     );
     return true
   };
+
+
+  public async verificOnExist(id:any):Promise<[boolean, string,boolean]>{
+
+    const response = await this.taskService.verificData(id).pipe(first()).toPromise();
+
+    return [true,'',false];
+  };
+
 
 
 }

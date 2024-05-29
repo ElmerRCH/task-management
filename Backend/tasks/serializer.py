@@ -5,8 +5,8 @@ class TaskSerializer(serializers.ModelSerializer):
    
     class Meta:
         model = Tasks
-        # fields = ('email','password')
-        fields = '__all__'
+        fields = ('id','name','date_create','duration','dead_line')
+        # fields = '__all__'
 
         
     

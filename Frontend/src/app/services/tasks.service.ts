@@ -23,4 +23,14 @@ export class TaskServices {
       })
     );
   }
+
+  verificData(id:any):Observable<any>{
+    return this.http.post('http://localhost:8000/tasks/verific-exist/',{'id':id}).pipe(
+      catchError((_: HttpErrorResponse) => {
+        return of(false);
+      })
+    );
+  }
+
+
 }

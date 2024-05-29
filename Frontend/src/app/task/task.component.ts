@@ -13,8 +13,8 @@ export class TaskComponent {
     private taskServices: TaskServices,
   ) {}
   tasks: any
-
-  typeController = 'new';
+  id: any
+  typeController = 'edit';
   controller = true
   textButton = 'new task'
 
@@ -23,6 +23,16 @@ export class TaskComponent {
   duration = ''
   @ViewChild('dateDeadInput') deadLine!: ElementRef;
 
+  async verificData() {
+    if (typeof this.id === 'number'){
+      const task = new Task(this.taskServices);
+      const data = await task.verificOnExist(this.id);
+
+    }
+    else{
+      alert('not id')
+    }
+  }
 
   receiveMessage($event: string) {
     this.typeController = $event;
@@ -42,13 +52,16 @@ export class TaskComponent {
     }
   }
 
-  ngOnInit(){
-
-    this.taskServices.getTask().subscribe(data => {
-        this.tasks = data;
+  getTasks(){
+    return this.taskServices.getTask().subscribe(data => {
+      this.tasks = data;
     });
-
   }
+
+  ngOnInit(){
+    this.getTasks()
+  }
+
 
   transformSelect(data:string) {
     if (data == '1'){
@@ -70,7 +83,6 @@ export class TaskComponent {
     console.log('deadline::',deadline)
     this.duration = this.transformSelect(this.duration)
     let data = {}
-    
     //----------------------------------------------
     const task = new Task(this.taskServices);
     switch (this.typeController) {
@@ -86,5 +98,6 @@ export class TaskComponent {
       break;
 
     }
+    this.getTasks()
   }
 }

@@ -21,7 +21,11 @@ from .serializer import TaskSerializer
 class TaskViewset(viewsets.ModelViewSet):
     queryset = Tasks.objects.all()
     serializer_class = TaskSerializer
-       
+    
+    def get_queryset(self):
+        user = self.request.user
+        return Tasks.objects.filter(user=user)
+        
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def add_task(request):
@@ -40,4 +44,12 @@ def add_task(request):
                 user = user
             )
         task.save()
+    return Response('echo')
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def verific_exist(request):
+    if not all(key in request.data.keys() for key in ['id']):
+        return Response({"available": False}, status=status.HTTP_400_BAD_REQUEST)
+    
     return Response('echo')
