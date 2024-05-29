@@ -19,7 +19,6 @@ export class Task {
     return true
   };
 
-
   public async verificOnExist(id:any):Promise<[string, string,string,string]>{
     let duration = ''
     const response = await this.taskService.verificData(id).pipe(first()).toPromise();
@@ -33,5 +32,28 @@ export class Task {
   };
 
 
-
-}''
+  public editTask(data:object,id:number): boolean {
+    Object.assign(data, { id: id});
+    this.taskService.editTask(data).subscribe(
+      response => {
+        console.log('funciono')
+      },
+      error => {
+        console.log('fallo')
+      }
+    );
+    return true
+  };
+  public deleteTask(data:object,id:number): boolean {
+    Object.assign(data, { id: id});
+    this.taskService.deleteTask(data).subscribe(
+      response => {
+        console.log('funciono')
+      },
+      error => {
+        console.log('fallo')
+      }
+    );
+    return true
+  };
+}

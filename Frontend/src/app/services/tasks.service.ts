@@ -32,5 +32,19 @@ export class TaskServices {
     );
   }
 
+  editTask(data:any):Observable<any>{
+    return this.http.post('http://localhost:8000/tasks/edit-task/',data).pipe(
+      catchError((_: HttpErrorResponse) => {
+        return of(false);
+      })
+    );
+  }
+  deleteTask(data:any):Observable<any>{
+    return this.http.post('http://localhost:8000/tasks/delete-task/',data).pipe(
+      catchError((_: HttpErrorResponse) => {
+        return of(false);
+      })
+    );
+  }
 
 }

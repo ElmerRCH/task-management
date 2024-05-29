@@ -17,10 +17,7 @@ class TaskViewset(viewsets.ModelViewSet):
         user = self.request.user
         return Tasks.objects.filter(user=user)
     
-        
-        
-    
-        
+               
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_task(request):
@@ -65,3 +62,43 @@ def verific_exist(request):
         data['deadLine'] = task_data.get('dead_line')
         
     return Response(data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def edit_task(request):
+    if not all(key in request.data.keys() for key in ['name','dateinit','duration','deadline']):
+        return Response({"available": False}, status=status.HTTP_400_BAD_REQUEST)
+    
+    task_id = request.data['id']
+    
+    try:
+        task = Tasks.objects.get(id=task_id)
+    except Tasks.DoesNotExist:
+        return Response({"available": False, "detail": "Task not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    task.name = request.data['name']
+    task.date_create = request.data['dateinit']
+    task.duration = request.data['duration']
+    task.dead_line = request.data['deadline']
+    
+    task.save()
+    return Response('echo')
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def delete_task(request):
+    if not all(key in request.data.keys() for key in ['name','dateinit','duration','deadline']):
+        return Response({"available": False}, status=status.HTTP_400_BAD_REQUEST)
+    
+    task_id = request.data['id']
+    
+    try:
+        task = Tasks.objects.get(id=task_id)
+    except Tasks.DoesNotExist:
+        return Response({"available": False, "detail": "Task not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    task.delete()
+    return Response('echo')
+
+

@@ -14,8 +14,8 @@ export class TaskComponent {
   ) {}
   tasks: any
   id: any
-  typeController = 'edit';
-  controller = true
+  typeController = '';
+  controller = false
   textButton = 'new task'
 
   nameTask = ''
@@ -61,7 +61,7 @@ export class TaskComponent {
   ngOnInit(){
     this.getTasks()
   }
-  
+
 
   transformSelect(data:string) {
     if (data == '1'){
@@ -76,28 +76,27 @@ export class TaskComponent {
   onSubmit(): void {
     const dateinit = this.dateInput.nativeElement.value;
     const deadline = this.deadLine.nativeElement.value;
-
-    console.log('name::',this.nameTask)
-    console.log('fecha::',dateinit)
-    console.log('duration::',this.duration)
-    console.log('deadline::',deadline)
     this.duration = this.transformSelect(this.duration)
-    let data = {}
-    //----------------------------------------------
+
     const task = new Task(this.taskServices);
+
+    let data = {
+      'name':this.nameTask,
+      'dateinit':dateinit,
+      'duration':this.duration,
+      'deadline':deadline,
+    }
     switch (this.typeController) {
       case 'new':
-        data = {
-          'name':this.nameTask,
-          'dateinit':dateinit,
-          'duration':this.duration,
-          'deadline':deadline,
-        }
         task.createTask(data)
-
-      break;
-
+        break;
+      case 'edit':
+        task.editTask(data,this.id)
+        break;
+      case 'delete':
+        task.deleteTask(data,this.id)
+        break;
     }
-    this.getTasks()
+    this.getTasks();
   }
 }
