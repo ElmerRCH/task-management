@@ -14,14 +14,20 @@ export class TaskComponent {
   ) {}
   tasks: any
   id: any
-  typeController = '';
-  controller = false
+  typeController = 'new';
+  controller = true
   textButton = 'new task'
 
   nameTask = ''
   @ViewChild('dateInput') dateInput!: ElementRef;
   duration = ''
   @ViewChild('dateDeadInput') deadLine!: ElementRef;
+
+
+  closeControllers(){
+    this.controller = false
+  }
+
 
   async verificData() {
     if (typeof this.id === 'number'){
