@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated , AllowAny
 from rest_framework.views import APIView
@@ -24,16 +25,18 @@ class TaskViewset(viewsets.ModelViewSet):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def add_task(request):
-   # authentication_classes = [JWTAuthentication]
+
+    if not all(key in request.data.keys() for key in ['name','dateinit','duration','deadline']):
+        return Response({"available": False}, status=status.HTTP_400_BAD_REQUEST)
     
     user = request.user
     if user.is_authenticated:
-        print('Usuario autenticado:', user)
-        print('Usuario id:', user.id)
+       
         task = Tasks.objects.create(
-                name = '1',
-                date_create ='1',
-                duration = '1',
+                name = request.data['name'],
+                date_create = request.data['dateinit'],
+                duration = request.data['duration'],
+                dead_line = request.data['deadline'],
                 user = user
             )
         task.save()

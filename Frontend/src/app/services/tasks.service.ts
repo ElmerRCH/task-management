@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-
+import { catchError } from 'rxjs/operators';
+import { HttpClient,HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError ,of} from 'rxjs';
 
 import { Router } from '@angular/router';
 
@@ -12,8 +12,15 @@ import { Router } from '@angular/router';
 export class TaskServices {
 
   constructor(private http: HttpClient) {}
-  newTask(): Observable<any> {
-    return this.http.post('http://localhost:8000/tasks/token/',1);
+  newTask(data:any): Observable<object> {
+    return this.http.post('http://localhost:8000/tasks/token/',data);
   }
-  
+
+  getTask(): Observable<any> {
+    return this.http.get('http://localhost:8000/tasks/get-task/').pipe(
+      catchError((_: HttpErrorResponse) => {
+        return of(false);
+      })
+    );
+  }
 }

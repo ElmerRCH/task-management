@@ -7,7 +7,7 @@ export class Task {
 
   public createTask(data:object): boolean {
 
-    this.taskService.newTask().subscribe(
+    this.taskService.newTask(data).subscribe(
       response => {
         console.log('funciono')
       },
@@ -15,7 +15,6 @@ export class Task {
         console.log('fallo')
       }
     );
-    this.taskService.newTask()
     return true
   };
 
