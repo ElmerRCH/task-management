@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Task } from './task';
+import { TaskServices } from "../services/tasks.service"
 
 @Component({
   selector: 'app-task',
@@ -7,15 +8,31 @@ import { Task } from './task';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent {
-
-  typeController = 'new';
-  controller = true
+  Task = Task;
+  constructor(
+    private taskServices: TaskServices,
+  ) {}
+  tasks: any
+  id: any
+  typeController = '';
+  controller = false
   textButton = 'new task'
 
   nameTask = ''
-  dateinit = ''
+  @ViewChild('dateInput') dateInput!: ElementRef;
   duration = ''
-  deadLine = ''
+  @ViewChild('dateDeadInput') deadLine!: ElementRef;
+
+  async verificData() {
+    if (typeof this.id === 'number'){
+      const task = new Task(this.taskServices);
+      const data = await task.verificOnExist(this.id);
+      [this.nameTask,this.dateInput.nativeElement.value,this.duration,this.deadLine.nativeElement.value] = data
+    }
+    else{
+      console.log('not id')
+    }
+  }
 
   receiveMessage($event: string) {
     this.typeController = $event;
@@ -35,14 +52,51 @@ export class TaskComponent {
     }
   }
 
-  onSubmit(): void {
+  getTasks(){
+    return this.taskServices.getTask().subscribe(data => {
+      this.tasks = data;
+    });
+  }
 
+  ngOnInit(){
+    this.getTasks()
+  }
+
+
+  transformSelect(data:string) {
+    if (data == '1'){
+      data = '30 minutos'
+    }
+    if (data == '2'){
+      data = '1 hora'
+    }
+    return data
+  }
+
+  onSubmit(): void {
+    const dateinit = this.dateInput.nativeElement.value;
+    const deadline = this.deadLine.nativeElement.value;
+    this.duration = this.transformSelect(this.duration)
+
+    const task = new Task(this.taskServices);
+
+    let data = {
+      'name':this.nameTask,
+      'dateinit':dateinit,
+      'duration':this.duration,
+      'deadline':deadline,
+    }
     switch (this.typeController) {
       case 'new':
-        Task.createTask({'echo':'01'})
-        
-      break;
-
+        task.createTask(data)
+        break;
+      case 'edit':
+        task.editTask(data,this.id)
+        break;
+      case 'delete':
+        task.deleteTask(data,this.id)
+        break;
     }
+    this.getTasks();
   }
 }

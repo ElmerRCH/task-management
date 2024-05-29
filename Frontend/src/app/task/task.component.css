@@ -4,9 +4,7 @@
   height:50vh;
   display: flex;
   justify-content: center;
-
 }
-
 
 .table-container{
   width: 60%;
@@ -40,6 +38,11 @@
 
 }
 
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 .controllers-containers{
   display: block;

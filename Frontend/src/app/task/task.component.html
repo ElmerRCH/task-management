@@ -24,24 +24,26 @@
               </tr>
           </thead>
           <tbody>
-              <tr class="  odd:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap text-white">
-                  1
-                </th>
-                  <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
-                      Apple MacBook Pro 17"
+              <ng-container *ngFor="let task of tasks">
+                <tr  class="  odd:bg-gray-900 even:bg-gray-450 even:dark:bg-gray-800 border-b border-gray-700">
+                  <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap text-white">
+                    {{task.id}}
                   </th>
-                  <td class="px-6 py-4">
-                      Silver
-                  </td>
-                  <td class="px-6 py-4">
-                      Laptop
-                  </td>
-                  <td class="px-6 py-4">
-                      $2999
-                  </td>
+                    <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                      {{task.name}}
+                    </th>
+                    <td class="px-6 py-4">
+                      {{task.date_create}}
+                    </td>
+                    <td class="px-6 py-4">
+                      {{task.duration}}
+                    </td>
+                    <td class="px-6 py-4">
+                      {{task.dead_line}}
+                    </td>
+                </tr>
+              </ng-container>
 
-              </tr>
           </tbody>
       </table>
     </div>
@@ -49,10 +51,10 @@
 
   <div [ngClass]="{'shadow-green': typeController == 'new','shadow-orange': typeController == 'edit','shadow-red': typeController == 'delete'}" *ngIf="controller" class="controllers-containers">
 
-    <form (submit)="onSubmit()" #form="ngForm"  action="#" class="max-w-sm mx-auto">
+    <form (ngSubmit)="getTasks()" (submit)="onSubmit()" #form="ngForm"  action="#" class="max-w-sm mx-auto">
       <div *ngIf="typeController == 'edit' || typeController == 'delete'" class="mb-5">
         <label for="text" class="block mb-2 text-sm font-medium text-white">id</label>
-        <input type="text" id="text" placeholder="id number:" class="shadow-sm  border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"  required />
+        <input [(ngModel)]="id" (input)="verificData()" name="id" type="number"  placeholder="id number:" class="shadow-sm  border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"  required />
       </div>
       <div class="mb-5">
         <label for="text" class="block mb-2 text-sm font-medium text-white">name task</label>
@@ -66,14 +68,14 @@
               <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
             </svg>
           </div>
-          <input datepicker [(ngModel)]="dateinit" name="dateinit" type="text" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-green dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+          <input datepicker #dateInput name="dateinit" type="text" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-green dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
         </div>
 
 
       </div>
       <div class="mb-5">
         <label  for="duration" class="block mb-2 text-sm font-medium text-white">Choose an option :</label>
-        <select [(ngModel)]="duration" name="duration" for="duration" class="duration block mb-2 text-sm font-medium text-gray-900 ">
+        <select [(ngModel)]="duration" #durationSelect="ngModel" name="duration" for="duration" class="duration block mb-2 text-sm font-medium text-gray-900 ">
           <option value="">Duration</option>
           <option value="1">30 minutos</option>
           <option value="2">1 hora</option>
@@ -87,14 +89,12 @@
               <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
             </svg>
           </div>
-          <input datepicker [(ngModel)]="deadLine" name="deadLine" type="text" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-green dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+          <input datepicker #dateDeadInput name="deadLine" type="text" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-green dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
         </div>
       </div>
       <button [ngClass]="{'button-green': typeController == 'new','button-orange': typeController == 'edit','button-red': typeController == 'delete'}"  type="submit" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">{{textButton}}</button>
     </form>
-    
+
   </div>
 </div>
-
-
 

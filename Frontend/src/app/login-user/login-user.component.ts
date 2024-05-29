@@ -51,15 +51,16 @@ export class LoginUserComponent implements OnInit{
 
 
     if(this.emailAvailable && this.passwordAvailable ){
+
       this.email = Utils.Encript( this.email)
       this.password = Utils.Encript(this.password)
 
-      this.userService.login({'email': this.email,'password': this.password,}).subscribe(
+      this.userService.login({'username': this.email,'password': this.password,}).subscribe(
         response => {
           this.router.navigate(['task']);
         },
         error => {
-          console.log('log correcto')
+          console.log('log incorrecto')
 
         }
       );
@@ -67,7 +68,7 @@ export class LoginUserComponent implements OnInit{
     else{
       alert('invalido')
     }
-
+    
   }
 
 

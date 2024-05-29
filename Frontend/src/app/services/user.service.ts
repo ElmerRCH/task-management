@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError,tap } from 'rxjs/operators';
+import { AuthResponse } from '../interface/auth-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -31,15 +32,28 @@ export class UserService {
       })
     );
   }
-
+  
   login(data: any): Observable<any> {
-    return this.http.post('http://localhost:8000/usuario/login/', data).pipe(
+    return this.http.post<AuthResponse>('http://localhost:8000/usuario/login/', data).pipe(
+      tap(response => {
+        // Almacenar los tokens en localStorage
+        localStorage.setItem('access_token', response.access);
+        localStorage.setItem('refresh_token', response.refresh);
+      }),
       catchError(error => {
         console.error('api log caida:', error);
-        throw error;
+        return throwError(error);
       })
     );
   }
 
+  getAccessToken(): string | null {
+    return localStorage.getItem('access_token');
+  }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+  }
 
 }
