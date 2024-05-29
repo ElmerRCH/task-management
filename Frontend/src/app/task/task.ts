@@ -20,13 +20,18 @@ export class Task {
   };
 
 
-  public async verificOnExist(id:any):Promise<[boolean, string,boolean]>{
-
+  public async verificOnExist(id:any):Promise<[string, string,string,string]>{
+    let duration = ''
     const response = await this.taskService.verificData(id).pipe(first()).toPromise();
-
-    return [true,'',false];
+    if (response['duration'] === '30 minutos'){
+        duration = '1'
+    }
+    if (response['duration'] === '1 hora'){
+      duration = '2'
+    }
+    return [response['name'],response['dateInit'],duration,response['deadLine']];
   };
 
 
 
-}
+}''

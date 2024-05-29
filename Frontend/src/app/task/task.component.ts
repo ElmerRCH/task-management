@@ -27,10 +27,10 @@ export class TaskComponent {
     if (typeof this.id === 'number'){
       const task = new Task(this.taskServices);
       const data = await task.verificOnExist(this.id);
-
+      [this.nameTask,this.dateInput.nativeElement.value,this.duration,this.deadLine.nativeElement.value] = data
     }
     else{
-      alert('not id')
+      console.log('not id')
     }
   }
 
@@ -61,7 +61,7 @@ export class TaskComponent {
   ngOnInit(){
     this.getTasks()
   }
-
+  
 
   transformSelect(data:string) {
     if (data == '1'){

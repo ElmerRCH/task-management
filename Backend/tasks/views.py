@@ -1,23 +1,14 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated , AllowAny
-from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated # , AllowAny
+# from rest_framework.views import APIView
 from rest_framework.decorators import api_view,permission_classes
-from rest_framework_simplejwt.authentication import JWTAuthentication
+# from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import Tasks
 from .serializer import TaskSerializer
 
 # Create your views here.
-"""class TaskListView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        tasks = Task.objects.all()
-        task_list = [{"id": task.id, "name": task.name} for task in tasks]
-        return Response(task_list)"""
- 
 class TaskViewset(viewsets.ModelViewSet):
     queryset = Tasks.objects.all()
     serializer_class = TaskSerializer
@@ -25,9 +16,13 @@ class TaskViewset(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return Tasks.objects.filter(user=user)
+    
+        
+        
+    
         
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def add_task(request):
 
     if not all(key in request.data.keys() for key in ['name','dateinit','duration','deadline']):
@@ -47,9 +42,26 @@ def add_task(request):
     return Response('echo')
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def verific_exist(request):
     if not all(key in request.data.keys() for key in ['id']):
         return Response({"available": False}, status=status.HTTP_400_BAD_REQUEST)
-    
-    return Response('echo')
+    data = {
+        'name':'',
+        'dateInit':'',
+        'duration':'',
+        'deadLine':''
+                
+    }
+    tasks = Tasks.objects.filter(id=request.data['id'])
+    serializer = TaskSerializer(tasks, many=True)
+
+    if serializer.data:
+        task_data = serializer.data[0]
+        
+        data['name'] = task_data.get('name')
+        data['dateInit'] = task_data.get('date_create')
+        data['duration'] = task_data.get('duration')
+        data['deadLine'] = task_data.get('dead_line')
+        
+    return Response(data)
