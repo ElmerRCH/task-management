@@ -13,7 +13,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from Backend.util.util_entry_data import Usuario as UsuarioData
 
-
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
 
