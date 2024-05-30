@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Task } from './task';
 import { TaskServices } from "../services/tasks.service"
+import { empty } from 'rxjs';
+
 
 @Component({
   selector: 'app-task',
@@ -14,14 +16,20 @@ export class TaskComponent {
   ) {}
   tasks: any
   id: any
-  typeController = '';
-  controller = false
+  typeController = 'new';
+  controller = true
   textButton = 'new task'
 
   nameTask = ''
   @ViewChild('dateInput') dateInput!: ElementRef;
   duration = ''
   @ViewChild('dateDeadInput') deadLine!: ElementRef;
+
+
+  closeControllers(){
+    this.controller = false
+  }
+
 
   async verificData() {
     if (typeof this.id === 'number'){
@@ -98,5 +106,17 @@ export class TaskComponent {
         break;
     }
     this.getTasks();
+    this.clear()
+  }
+
+  clear(){
+    this.id = empty
+    this.nameTask = ''
+    this.duration = ''
+    this.typeController = '';
+    this.controller = false
+    this.dateInput.nativeElement.value = ''
+    this.deadLine.nativeElement.value = ''
   }
 }
+

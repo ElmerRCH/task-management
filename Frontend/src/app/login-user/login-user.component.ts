@@ -1,13 +1,14 @@
 import {Utils} from '../utils/Utils'
-import { ActivatedRoute,Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-user',
   templateUrl: './login-user.component.html',
   styleUrls: ['./login-user.component.css','../app.component.css']
 })
+
 export class LoginUserComponent implements OnInit{
   Utils = Utils;
 
@@ -23,6 +24,7 @@ export class LoginUserComponent implements OnInit{
   password: string = ''
   passwordAvailable:boolean = false
   showPassword:boolean = false
+
   // para notificaciones
   message: string = '';
   notification: boolean = false
@@ -46,16 +48,9 @@ export class LoginUserComponent implements OnInit{
     const result = await utils.validationEmail(this.email,false);
     [, ,this.emailAvailable] = result;
     [, ,this.passwordAvailable] =Utils.validationPassword(this.password);
-    console.log('email',this.emailAvailable)
-    console.log('pass',this.passwordAvailable)
-
 
     if(this.emailAvailable && this.passwordAvailable ){
-
-      this.email = Utils.Encript( this.email)
-      this.password = Utils.Encript(this.password)
-
-      this.userService.login({'username': this.email,'password': this.password,}).subscribe(
+      this.userService.login({'username': Utils.Encript( this.email),'password': Utils.Encript(this.password)}).subscribe(
         response => {
           this.router.navigate(['task']);
         },
@@ -68,7 +63,7 @@ export class LoginUserComponent implements OnInit{
     else{
       alert('invalido')
     }
-    
+
   }
 
 
