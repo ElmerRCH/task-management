@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Task } from './task';
 import { TaskServices } from "../services/tasks.service"
+import { empty } from 'rxjs';
+
 
 @Component({
   selector: 'app-task',
@@ -104,5 +106,17 @@ export class TaskComponent {
         break;
     }
     this.getTasks();
+    this.clear()
+  }
+
+  clear(){
+    this.id = empty
+    this.nameTask = ''
+    this.duration = ''
+    this.typeController = '';
+    this.controller = false
+    this.dateInput.nativeElement.value = ''
+    this.deadLine.nativeElement.value = ''
   }
 }
+

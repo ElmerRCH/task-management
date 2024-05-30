@@ -23,6 +23,7 @@ export class LoginUserComponent implements OnInit{
   password: string = ''
   passwordAvailable:boolean = false
   showPassword:boolean = false
+
   // para notificaciones
   message: string = '';
   notification: boolean = false
@@ -51,11 +52,7 @@ export class LoginUserComponent implements OnInit{
 
 
     if(this.emailAvailable && this.passwordAvailable ){
-
-      this.email = Utils.Encript( this.email)
-      this.password = Utils.Encript(this.password)
-
-      this.userService.login({'username': this.email,'password': this.password,}).subscribe(
+      this.userService.login({'username': Utils.Encript( this.email),'password': Utils.Encript(this.password)}).subscribe(
         response => {
           this.router.navigate(['task']);
         },

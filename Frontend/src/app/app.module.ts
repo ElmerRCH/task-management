@@ -9,6 +9,7 @@ import { LoginUserComponent } from './login-user/login-user.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './auth.guard';
@@ -34,6 +35,7 @@ export function tokenGetter() {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
