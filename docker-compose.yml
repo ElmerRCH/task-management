@@ -15,11 +15,8 @@ services:
       context: Frontend/
     working_dir: /app
     ports:
-      - 4209:4209
+      - 4500:4500
     volumes:
       - ./Frontend:/app:delegated
-
-    command: ["sh", "-c", "npm install && ng serve --host 0.0.0.0 --port 4209", "--live-reload"]
-   
-
- 
+    command: ["sh", "-c", "npm install && ng serve --host 0.0.0.0 --port 4500", "--live-reload"]
+  

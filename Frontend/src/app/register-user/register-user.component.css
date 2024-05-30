@@ -1,0 +1,71 @@
+.error {
+  border: 1px solid red;
+
+}
+.error-email {
+  border: 1px solid red;
+
+}
+.button-submit{
+  background: none;
+}
+.help-email{
+  background: blue;
+
+}
+.messages-containers{
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+}
+.messages-containers div{
+  color: black;
+  background-color: lightgreen;
+  border-radius: 10px;
+  margin-bottom:5px;
+  margin-right: 10px;
+  text-align: start;
+  grid-column: 2 / end;
+}
+.messages-containers .messages-containers-error{
+  color: black;
+  background-color: red;
+  border-radius: 10px;
+  margin-bottom:5px;
+  margin-right: 10px;
+  text-align: start;
+  grid-column: 2 / end;
+}
+.messages-containers .messages-password-not-safe{
+ background: lightcoral;
+}
+
+.messages-containers div span{
+  opacity: 1;
+  margin-left: 10%;
+
+}
+.container-help-password{
+  border: 2px solid lightgreen;
+  margin-top:2%;
+  border-radius: 10px;
+  color: white;
+
+}
+.container-help-password p{
+  padding-top:10px;
+  margin-left:15px;
+}
+
+.container-help-password ul{
+  margin-left:10%;
+  list-style-type: disc
+}
+.container-help-password-green{
+  color:lightgreen
+}
+.container-help-password-red{
+  color:lightcoral
+}
+
