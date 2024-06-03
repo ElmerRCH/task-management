@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     && apt-get clean
-    
+
 # Install dependencies
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
@@ -21,4 +21,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app/
 
 # Run the application
-CMD ["gunicorn", "your_django_project.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "Backend.wsgi:application", "--bind", "0.0.0.0:8000"]
