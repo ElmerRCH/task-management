@@ -1,9 +1,7 @@
 import { catchError } from 'rxjs/operators';
 import { HttpClient,HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError ,of} from 'rxjs';
-
-import { Router } from '@angular/router';
+import { Observable ,of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +11,11 @@ export class TaskServices {
 
   constructor(private http: HttpClient) {}
   newTask(data:any): Observable<object> {
-    return this.http.post('http://localhost:8000/tasks/token/',data);
+    return this.http.post('https://task-management-gj2t.onrender.com/tasks/token/',data);
   }
 
   getTask(): Observable<any> {
-    return this.http.get('http://localhost:8000/tasks/get-task/').pipe(
+    return this.http.get('https://task-management-gj2t.onrender.com/tasks/get-task/').pipe(
       catchError((_: HttpErrorResponse) => {
         return of(false);
       })
@@ -25,7 +23,7 @@ export class TaskServices {
   }
 
   verificData(id:any):Observable<any>{
-    return this.http.post('http://localhost:8000/tasks/verific-exist/',{'id':id}).pipe(
+    return this.http.post('https://task-management-gj2t.onrender.com/tasks/verific-exist/',{'id':id}).pipe(
       catchError((_: HttpErrorResponse) => {
         return of(false);
       })
@@ -33,14 +31,14 @@ export class TaskServices {
   }
 
   editTask(data:any):Observable<any>{
-    return this.http.post('http://localhost:8000/tasks/edit-task/',data).pipe(
+    return this.http.post('https://task-management-gj2t.onrender.com/tasks/edit-task/',data).pipe(
       catchError((_: HttpErrorResponse) => {
         return of(false);
       })
     );
   }
   deleteTask(data:any):Observable<any>{
-    return this.http.post('http://localhost:8000/tasks/delete-task/',data).pipe(
+    return this.http.post('https://task-management-gj2t.onrender.com/tasks/delete-task/',data).pipe(
       catchError((_: HttpErrorResponse) => {
         return of(false);
       })

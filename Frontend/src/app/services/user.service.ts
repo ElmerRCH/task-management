@@ -9,14 +9,13 @@ import { AuthResponse } from '../interface/auth-interface';
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-  private apiUrl = 'http://localhost:8000/usuario/registrar/';
 
   PostRegisterUser(): Observable<any> {
-    return this.http.get('http://localhost:8000/usuario/prueba/');
+    return this.http.get('https://task-management-gj2t.onrender.com/usuario/prueba/');
   }
 
   checkEmail(data: any): Observable<any> {
-    return this.http.post('http://localhost:8000/usuario/verificar-email/', data).pipe(
+    return this.http.post('https://task-management-gj2t.onrender.com/usuario/verificar-email/', data).pipe(
       catchError(error => {
         console.error('Error al crear usuario:', error);
         throw error;
@@ -25,16 +24,16 @@ export class UserService {
   }
 
   createUser(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data).pipe(
+    return this.http.post('https://task-management-gj2t.onrender.com/usuario/registrar/', data).pipe(
       catchError(error => {
         console.error('Error al crear usuario:', error);
         throw error;
       })
     );
   }
-  
+
   login(data: any): Observable<any> {
-    return this.http.post<AuthResponse>('http://localhost:8000/usuario/login/', data).pipe(
+    return this.http.post<AuthResponse>('https://task-management-gj2t.onrender.com/usuario/login/', data).pipe(
       tap(response => {
         // Almacenar los tokens en localStorage
         localStorage.setItem('access_token', response.access);
