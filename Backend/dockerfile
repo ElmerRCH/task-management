@@ -22,4 +22,5 @@ COPY . /app/
 
 # Run the application
 
-CMD ["python manage.py migrate && gunicorn Backend.wsgi:application --bind 0.0.0.0:8000"]
+# CMD ["python manage.py migrate && gunicorn Backend.wsgi:application --bind 0.0.0.0:8000"]
+ENTRYPOINT ["/app/entrypoint.sh"]
