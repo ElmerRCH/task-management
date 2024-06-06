@@ -31,7 +31,7 @@ export class UserService {
       })
     );
   }
-
+  
   login(data: any): Observable<any> {
     return this.http.post<AuthResponse>('https://task-management-gj2t.onrender.com/usuario/login/', data).pipe(
       tap(response => {
